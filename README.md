@@ -20,6 +20,7 @@ Cloné le Repository du projet en local sur votre ordinateur en passant par GitH
 
 -	Utiliser le lien suivant pour accéder au répertoire PROJET.
 
+https://github.com/XP06/P3_Entrevoisins.git
 
 ![image](https://user-images.githubusercontent.com/63601884/115552639-d1a10f00-a2ac-11eb-8e7c-90e079df0dd8.png)
 
@@ -54,6 +55,7 @@ Télécharger le projet sur votre ordinateur en réalisant les opérations suiva
 
 -	Utiliser le lien suivant pour accéder au répertoire PROJET.
 
+https://github.com/Deyine/OpenClassrooms/tree/master/Android/Entrevoisins
 
 
 -	Se rendre à la racine du répertoire.
@@ -110,8 +112,7 @@ L’application est compilée et exécutée, celle-ci est fonctionnelle.
 
 ** AJOUT DE FONCTIONALITE **
 
-
-
+![image](https://user-images.githubusercontent.com/63601884/115555622-fea2f100-a2af-11eb-8254-ca34328ce1b1.png)
 
 
 Entrevoisins – Service d’entraide.
