@@ -55,7 +55,8 @@ Télécharger le projet sur votre ordinateur en réalisant les opérations suiva
 
 -	Utiliser le lien suivant pour accéder au répertoire PROJET.
 
-https://github.com/Deyine/OpenClassrooms/tree/master/Android/Entrevoisins
+
+
 
 
 -	Se rendre à la racine du répertoire.
