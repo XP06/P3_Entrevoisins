@@ -54,7 +54,7 @@ public class NeighbourServiceTest {
     @Test
     public void addNeighbourToFavsWithSuccess() {
         //Voisin de test
-        Neighbour favVoisin = new Neighbour(1, "Yohan", "http://i.pravatar.cc/150?u=a042581f4e29026704e");
+        Neighbour favVoisin = new Neighbour(1, "Yohan", "http://i.pravatar.cc/150?u=a042581f4e29026704e","Rue du mercredi à 2 km","+33 6 00 00 00 00","www.facebook.fr/yohan","j'aime le vélo");
 
         //Recupere la liste des favoris, elle est vide donc sa taille est de 0
         List<Neighbour> favsneighbour = service.getFav_neighbours();

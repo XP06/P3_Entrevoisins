@@ -5,7 +5,7 @@ import java.util.Objects;
 /**
  * Model object representing a Neighbour
  */
-public class Neighbour {
+public class NeighbourFavorites {
 
     /** Identifier */
     private Integer id;
@@ -17,37 +17,37 @@ public class Neighbour {
     private String avatarUrl;
 
     /** Adress */
-    private String LocationOn;
+    private String locationOn;
 
     /** Phone number */
-    private String PhoneNumber;
+    private String phoneNumber;
 
     /** www */
-    private String Www;
+    private String www;
 
     /** Datas Aboutme */
-    private String tDatasAboutMe;
+    private String tAboutMe;
 
     /**
      * Constructor
      * @param id
      * @param name
      * @param avatarUrl
-     * @param LocationOn
-     * @param PhoneNumber
-     * @param Www
-     * @param tDatasAboutMe
+     * @param locationOn
+     * @param phoneNumber
+     * @param www
+     * @param tAboutMe
      *
      *
      */
-    public Neighbour(Integer id, String name, String avatarUrl, String LocationOn, String PhoneNumber, String Www, String tDatasAboutMe) {
+    public NeighbourFavorites(Integer id, String name, String avatarUrl, String locationOn, String phoneNumber, String www, String tAboutMe) {
         this.id = id;
         this.name = name;
         this.avatarUrl = avatarUrl;
-        this.LocationOn = LocationOn;
-        this.PhoneNumber = PhoneNumber;
-        this.Www = Www;
-        this.tDatasAboutMe = tDatasAboutMe;
+        this.locationOn = locationOn;
+        this.phoneNumber = phoneNumber;
+        this.www = www;
+        this.tAboutMe = tAboutMe;
 
 
     }
@@ -76,44 +76,53 @@ public class Neighbour {
         this.avatarUrl = avatarUrl;
     }
 
-    public String getLocationOn() {
-        return LocationOn;
+    public String getlocationOn() {
+        return locationOn;
     }
 
-    public void setLocationOn(String LocationOn) {
-        this.LocationOn = LocationOn;
+    public void setLocationOn(String tAboutMe) {
+        this.locationOn = locationOn;
     }
 
-    public String getPhoneNumber() {
-        return PhoneNumber;
+    public String getphoneNumber() {
+        return phoneNumber;
     }
 
-    public void setPhoneNumber(String PhoneNumber) {
-        this.PhoneNumber = PhoneNumber;
+    public void setPhoneNumber(Integer id) {
+        this.phoneNumber = phoneNumber;
     }
 
-    public String getWww() {
-        return Www;
+    public String getwww() {
+        return www;
     }
 
-    public void setWww(String Www) {
-        this.Www = Www;
+    public void setwww(String tAboutMe) {
+        this.www = www;
     }
 
-    public String gettDatasAboutMe() {
-        return tDatasAboutMe;
+    public String gettAboutMe() {
+        return tAboutMe;
     }
 
-    public void settDatasAboutMe(String tDatasAboutMe) {
-        this.tDatasAboutMe = tDatasAboutMe;
+    public void settAboutMe(String tAboutMe) {
+        this.tAboutMe = tAboutMe;
     }
+
+
+
+
+
+
+
+
+
 
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Neighbour neighbour = (Neighbour) o;
+        NeighbourFavorites neighbour = (NeighbourFavorites) o;
         return Objects.equals(id, neighbour.id);
     }
 

@@ -44,8 +44,6 @@ public class FavNeighbourFragment extends Fragment {
         mApiService = DI.getNeighbourApiService();
     }
 
-
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

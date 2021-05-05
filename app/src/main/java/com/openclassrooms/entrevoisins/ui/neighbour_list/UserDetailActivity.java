@@ -1,33 +1,19 @@
 package com.openclassrooms.entrevoisins.ui.neighbour_list;
 
-import android.content.Context;
+
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.DividerItemDecoration;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.util.AttributeSet;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestOptions;
 import com.openclassrooms.entrevoisins.R;
-import com.openclassrooms.entrevoisins.di.DI;
 import com.openclassrooms.entrevoisins.model.Neighbour;
-import com.openclassrooms.entrevoisins.service.DummyNeighbourApiService;
-import com.openclassrooms.entrevoisins.service.DummyNeighbourGenerator;
-import com.openclassrooms.entrevoisins.service.NeighbourApiService;
-
-import java.text.ParseException;
-import java.util.ArrayList;
-import java.util.List;
 
 public class UserDetailActivity extends AppCompatActivity {
 
@@ -35,19 +21,29 @@ public class UserDetailActivity extends AppCompatActivity {
     TextView tvUsername;
     FloatingActionButton fabFavorite;
     Integer idFavItem = 0;
+    TextView UserName;
+    TextView LocationOn;
+    TextView PhoneNumber;
+    TextView Www;
+    TextView tDatasAboutMe;
 
+
+
+
+    @SuppressLint("CutPasteId")
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_detail);
         getSupportActionBar().hide();
 
-        //CHECK IN NEIGHBOUR IS ALREADY IN FAVS AND DISABLE BUTTON OR NOT
+        //CHECK IN VOISIN EST DEJA EN FAVS ET DESACTIVER LE BOUTON OU NON
         fabFavorite = findViewById(R.id.floatingActionButton);
-        Neighbour nouvoVoisin = new Neighbour(Integer.parseInt(getIntent().getStringExtra("id")), getIntent().getStringExtra("name"), getIntent().getStringExtra("avatar_url"));
+                Neighbour nouvoVoisin = new Neighbour(Integer.parseInt(getIntent().getStringExtra("id")), getIntent().getStringExtra("name"), getIntent().getStringExtra("avatar_url"), getIntent().getStringExtra("LocationOn"), getIntent().getStringExtra("PhoneNumber"), getIntent().getStringExtra("www"), getIntent().getStringExtra("tDatasAboutMe"));
         if (FavNeighbourFragment.mNeighbours.contains(nouvoVoisin)) {
             fabFavorite.setEnabled(false);
             fabFavorite.setImageDrawable(getDrawable(R.drawable.star_filled));
+
         } else {
             fabFavorite.setEnabled(true);
             fabFavorite.setImageDrawable(getDrawable(R.drawable.star_empty));
@@ -74,6 +70,22 @@ public class UserDetailActivity extends AppCompatActivity {
                 .load(getIntent().getStringExtra("avatar_url"))
                 .centerCrop()
                 .into(mUserPic);
+
+        //RECUPERE ET SET LES COORDONNEES
+        UserName = findViewById(R.id.UserName);
+        UserName.setText(getIntent().getStringExtra("name"));
+
+        LocationOn = findViewById(R.id.LocationOn);
+        LocationOn.setText(getIntent().getStringExtra("LocationOn"));
+
+        PhoneNumber = findViewById(R.id.PhoneNumber);
+        PhoneNumber.setText(getIntent().getStringExtra("PhoneNumber"));
+
+        Www = findViewById(R.id.Www);
+        Www.setText(getIntent().getStringExtra("www"));
+
+        tDatasAboutMe = findViewById(R.id.tDatasAboutMe);
+        tDatasAboutMe.setText(getIntent().getStringExtra("tDatasAboutMe"));
 
         //GERE LES FAVORIS //
 
