@@ -1,11 +1,14 @@
 
 package com.openclassrooms.entrevoisins.neighbour_list;
 
-import android.support.test.espresso.action.ViewActions;
-import android.support.test.espresso.contrib.RecyclerViewActions;
-import android.support.test.espresso.matcher.ViewMatchers;
-import android.support.test.rule.ActivityTestRule;
-import android.support.test.runner.AndroidJUnit4;
+
+import androidx.test.espresso.ViewAction;
+import androidx.test.espresso.ViewAssertion;
+import androidx.test.espresso.action.ViewActions;
+import androidx.test.espresso.contrib.RecyclerViewActions;
+import androidx.test.espresso.matcher.ViewMatchers;
+import androidx.test.rule.ActivityTestRule;
+import androidx.test.runner.AndroidJUnit4;
 
 import com.openclassrooms.entrevoisins.R;
 import com.openclassrooms.entrevoisins.ui.neighbour_list.ListNeighbourActivity;
@@ -17,14 +20,13 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import static android.support.test.espresso.Espresso.onView;
-import static android.support.test.espresso.assertion.ViewAssertions.matches;
-import static android.support.test.espresso.matcher.ViewMatchers.assertThat;
-import static android.support.test.espresso.matcher.ViewMatchers.hasMinimumChildCount;
+
+import static androidx.test.espresso.Espresso.onView;
+import static androidx.test.espresso.assertion.ViewAssertions.matches;
+import static androidx.test.espresso.matcher.ViewMatchers.hasMinimumChildCount;
 import static com.openclassrooms.entrevoisins.utils.RecyclerViewItemCountAssertion.withItemCount;
-import static org.hamcrest.core.IsNull.notNullValue;
-
-
+import static org.hamcrest.Matchers.notNullValue;
+import static org.junit.Assert.assertThat;
 
 /**
  * Test class for list of neighbours
@@ -62,12 +64,12 @@ public class NeighboursListTest {
     @Test
     public void myNeighboursList_deleteAction_shouldRemoveItem() {
         // Given : We remove the element at position 2
-        onView(ViewMatchers.withId(R.id.list_neighbours)).check(withItemCount(ITEMS_COUNT));
+        onView(ViewMatchers.withId(R.id.list_neighbours)).check((ViewAssertion) withItemCount(ITEMS_COUNT));
         // When perform a click on a delete icon
         onView(ViewMatchers.withId(R.id.list_neighbours))
-                .perform(RecyclerViewActions.actionOnItemAtPosition(1, new DeleteViewAction()));
+                .perform(RecyclerViewActions.actionOnItemAtPosition(1, (ViewAction) new DeleteViewAction()));
         // Then : the number of element is 11
-        onView(ViewMatchers.withId(R.id.list_neighbours)).check(withItemCount(ITEMS_COUNT-1));
+        onView(ViewMatchers.withId(R.id.list_neighbours)).check((ViewAssertion) withItemCount(ITEMS_COUNT-1));
     }
 
     /**
@@ -101,7 +103,7 @@ public class NeighboursListTest {
     public void FavsTab_OnlyContainFavsUSers() {
         // When perform a click on a item 0
         onView(ViewMatchers.withId(R.id.list_neighbours))
-                .perform(RecyclerViewActions.actionOnItemAtPosition(0, new ClickItemAction()));
+                .perform(RecyclerViewActions.actionOnItemAtPosition(0, (ViewAction) new ClickItemAction()));
         // Then : perform a click on favorite fab of item 0 Details Screen
         onView(ViewMatchers.withId(R.id.floatingActionButton)).perform(ViewActions.click());
         // Then : Go Back to Main Screen

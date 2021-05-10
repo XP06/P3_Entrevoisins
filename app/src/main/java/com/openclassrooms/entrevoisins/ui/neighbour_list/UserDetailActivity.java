@@ -1,17 +1,17 @@
 package com.openclassrooms.entrevoisins.ui.neighbour_list;
 
-
 import android.annotation.SuppressLint;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.bumptech.glide.Glide;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.openclassrooms.entrevoisins.R;
 import com.openclassrooms.entrevoisins.model.Neighbour;
 
@@ -39,14 +39,22 @@ public class UserDetailActivity extends AppCompatActivity {
 
         //CHECK IN VOISIN EST DEJA EN FAVS ET DESACTIVER LE BOUTON OU NON
         fabFavorite = findViewById(R.id.floatingActionButton);
-                Neighbour nouvoVoisin = new Neighbour(Integer.parseInt(getIntent().getStringExtra("id")), getIntent().getStringExtra("name"), getIntent().getStringExtra("avatar_url"), getIntent().getStringExtra("LocationOn"), getIntent().getStringExtra("PhoneNumber"), getIntent().getStringExtra("www"), getIntent().getStringExtra("tDatasAboutMe"));
-        if (FavNeighbourFragment.mNeighbours.contains(nouvoVoisin)) {
-            fabFavorite.setEnabled(false);
-            fabFavorite.setImageDrawable(getDrawable(R.drawable.star_filled));
+        Neighbour nouvoVoisin = new Neighbour(Integer.parseInt(getIntent().getStringExtra("id")),
+                getIntent().getStringExtra("name"),
+                getIntent().getStringExtra("avatar_url"),
+                getIntent().getStringExtra("LocationOn"),
+                getIntent().getStringExtra("PhoneNumber"),
+                getIntent().getStringExtra("www"),
+                getIntent().getStringExtra("tDatasAboutMe"));
+
+        if (!FavNeighbourFragment.mNeighbours.contains(nouvoVoisin)) {
+            fabFavorite.setEnabled(true);
+
+            fabFavorite.setImageDrawable(getDrawable(R.drawable.star_empty));
 
         } else {
-            fabFavorite.setEnabled(true);
-            fabFavorite.setImageDrawable(getDrawable(R.drawable.star_empty));
+            fabFavorite.setEnabled(false);
+            fabFavorite.setImageDrawable(getDrawable(R.drawable.star_filled));
         }
 
         // RETOUR QUAND ON CLIQUE SUR LA FLECHE RETOUR //
@@ -94,8 +102,16 @@ public class UserDetailActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Toast.makeText(UserDetailActivity.this, "ADDED TO FAVS CLICKED", Toast.LENGTH_SHORT).show();
 
-                fabFavorite.setImageDrawable(getDrawable(R.drawable.star_filled));
-                fabFavorite.setEnabled(false);
+
+                if (FavNeighbourFragment.mNeighbours.contains(nouvoVoisin)) {
+                    fabFavorite.setEnabled(false);
+                    fabFavorite.setImageDrawable(getDrawable(R.drawable.star_empty));
+
+                } else {
+                    fabFavorite.setEnabled(false);
+                    fabFavorite.setImageDrawable(getDrawable(R.drawable.star_filled));
+                }
+
 
                 // RECUP LE NOM ET LA PHOTO ET l'ID ORIGINAL ET CREER UN MODEL "Neighbour" qui sera add a la liste des favoris //
 

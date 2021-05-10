@@ -1,15 +1,11 @@
 package com.openclassrooms.entrevoisins.ui.neighbour_list;
 
-import android.content.Context;
-import android.support.constraint.ConstraintLayout;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
+
 import android.util.Log;
-import android.widget.Toast;
 
-import com.openclassrooms.entrevoisins.service.DummyNeighbourGenerator;
-
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentPagerAdapter;
 
 public class ListNeighbourPagerAdapter extends FragmentPagerAdapter {
 
