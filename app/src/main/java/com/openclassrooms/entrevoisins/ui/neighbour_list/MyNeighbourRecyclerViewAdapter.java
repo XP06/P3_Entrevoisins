@@ -1,18 +1,14 @@
 package com.openclassrooms.entrevoisins.ui.neighbour_list;
 
-import android.app.Activity;
-import android.app.ActivityOptions;
-import android.content.Context;
 import android.content.Intent;
-import android.support.constraint.ConstraintLayout;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
@@ -34,6 +30,7 @@ public class MyNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<MyNeigh
     public MyNeighbourRecyclerViewAdapter(List<Neighbour> items) {
         mNeighbours = items;
     }
+
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -58,26 +55,14 @@ public class MyNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<MyNeigh
             }
         });
 
-        // Controle le click sur la row du recycler //
-
-        holder.mRecycler_item.setOnClickListener(new View.OnClickListener() {
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-
-                Intent go_detail = new Intent(v.getContext(), UserDetailActivity.class);
-
-                go_detail.putExtra("tDatasAboutMe", mNeighbours.get(position).gettDatasAboutMe());
-                go_detail.putExtra("www", mNeighbours.get(position).getWww());
-                go_detail.putExtra("PhoneNumber", mNeighbours.get(position).getPhoneNumber());
-                go_detail.putExtra("LocationOn", mNeighbours.get(position).getLocationOn());
-                go_detail.putExtra("name", mNeighbours.get(position).getName());
-                go_detail.putExtra("avatar_url", mNeighbours.get(position).getAvatarUrl());
-                go_detail.putExtra("id", String.valueOf(mNeighbours.get(position).getId()));
-                v.getContext().startActivity(go_detail);
-
+            public void onClick(View view) {
+                Intent detailsActivity = new Intent(holder.itemView.getContext(), Details.class); // Intent object with the context
+                detailsActivity.putExtra("neighbour1", neighbour); // Send neighbour to second activity
+                holder.itemView.getContext().startActivity(detailsActivity); // Start second activity
             }
         });
-
     }
 
     @Override
@@ -92,10 +77,6 @@ public class MyNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<MyNeigh
         public TextView mNeighbourName;
         @BindView(R.id.item_list_delete_button)
         public ImageButton mDeleteButton;
-        //AJOUT RECYCLER VIEW ROW
-        @BindView(R.id.recycler_row)
-        public ConstraintLayout mRecycler_item;
-
 
         public ViewHolder(View view) {
             super(view);

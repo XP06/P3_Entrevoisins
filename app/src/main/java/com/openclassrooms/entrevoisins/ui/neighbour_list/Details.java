@@ -2,28 +2,20 @@ package com.openclassrooms.entrevoisins.ui.neighbour_list;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.ToggleButton;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestOptions;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.openclassrooms.entrevoisins.R;
 import com.openclassrooms.entrevoisins.di.DI;
 import com.openclassrooms.entrevoisins.model.Neighbour;
-import com.openclassrooms.entrevoisins.service.DummyNeighbourApiService;
 import com.openclassrooms.entrevoisins.service.NeighbourApiService;
-
-import org.w3c.dom.Text;
-
-import java.util.List;
 
 public class Details extends AppCompatActivity {
     private ImageView avatar;
@@ -85,18 +77,18 @@ public class Details extends AppCompatActivity {
             neighStr2 += neighbour1.getName();
 
         // Get avatar from first activity
-        avatar = (ImageView) findViewById(R.id.avatar);
+        avatar = findViewById(R.id.avatar);
         Glide.with(this)
                 .load(neighbour1.getAvatarUrl())
                 .into(avatar);
 
         // Display name on details screen
-        personName = (TextView) findViewById(R.id.personName);
+        personName = findViewById(R.id.userName);
         personName.setText(neighbourStr);
         toolbar.setTitle(neighbourStr);
 
         // Display name on socials
-        reseau = (TextView) findViewById(R.id.reseau);
+        reseau = findViewById(R.id.www);
         reseau.setText(neighStr2);
 
     }

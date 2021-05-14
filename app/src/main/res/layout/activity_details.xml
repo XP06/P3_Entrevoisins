@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,16 +8,17 @@
     android:background="#E9E9E9"
     tools:context=".ui.neighbour_list.Details">
 
-    <android.support.design.widget.AppBarLayout
+    <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/app_bar"
         android:layout_width="match_parent"
-        android:layout_height="220dp"
+        android:layout_height="250dp"
         android:theme="@style/AppTheme.AppBarOverlay">
 
-        <android.support.design.widget.CollapsingToolbarLayout
+        <com.google.android.material.appbar.CollapsingToolbarLayout
             android:id="@+id/toolbar_layout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="-16dp"
             android:fitsSystemWindows="true"
             app:contentScrim="?attr/colorPrimary"
             app:layout_scrollFlags="scroll|exitUntilCollapsed"
@@ -27,49 +29,53 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:contentDescription="@string/contentDescription"
-                android:scaleType="centerCrop"></ImageView>
+                android:scaleType="centerCrop">
+            </ImageView>
 
-            <android.support.v7.widget.Toolbar
+            <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
+                android:layout_marginLeft="@dimen/default_margin"
                 app:layout_collapseMode="pin"
                 app:navigationIcon="@drawable/icons8_left_24"
                 app:popupTheme="@style/AppTheme.AppBarOverlay"
-                app:title="@string/personname"
+                app:title="@string/username"
                 app:subtitleTextAppearance="@string/title_activity_details"/>
 
-        </android.support.design.widget.CollapsingToolbarLayout>
+        </com.google.android.material.appbar.CollapsingToolbarLayout>
 
 
-    </android.support.design.widget.AppBarLayout>
+    </com.google.android.material.appbar.AppBarLayout>
 
-    <android.support.design.widget.FloatingActionButton
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/fab_margin"
         android:tint="#FFB701"
-        app:backgroundTint="#FFFFFF"
+        app:backgroundTint="#FF80AB"
         app:layout_anchor="@id/app_bar"
         app:layout_anchorGravity="bottom|end"
         app:srcCompat="@drawable/ic_star_border_white_24dp" />
 
-    <android.support.v7.widget.CardView
+    <androidx.cardview.widget.CardView
         android:id="@+id/card1"
-        android:layout_width="380dp"
-        android:layout_height="180dp"
+        android:layout_width="match_parent"
+        android:layout_height="220dp"
+        app:cardCornerRadius="5dp"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="235dp"
+        android:layout_marginTop="266dp"
+        android:layout_marginHorizontal="16dp"
         android:visibility="visible">
 
         <TextView
-            android:id="@+id/personName"
+            android:id="@+id/userName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingStart="15dp"
             android:paddingTop="10dp"
-            android:text="@string/personname"
+            android:text="@string/username"
             android:textAppearance="@style/TextAppearance.AppCompat.Title"
             android:textSize="25sp" />
 
@@ -80,45 +86,47 @@
             android:background="#f5f5f5" />
 
         <TextView
-            android:id="@+id/lieu"
+            android:id="@+id/locationOn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="18dp"
-            android:drawablePadding="20dp"
-            android:layout_marginTop="60dp"
+            android:layout_marginStart="@dimen/default_margin"
+            android:layout_marginTop="70dp"
             android:drawableStart="@drawable/baseline_location_on_black_18dp"
-            android:text="@string/lieu"
+            android:drawablePadding="20dp"
+            android:text="@string/locationOn"
             android:textSize="18sp" />
 
         <TextView
-            android:id="@+id/phone2"
+            android:id="@+id/phonenumber"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="18dp"
-            android:drawablePadding="20dp"
-            android:layout_marginTop="100dp"
+            android:layout_marginStart="@dimen/default_margin"
+            android:layout_marginTop="120dp"
             android:drawableStart="@drawable/baseline_call_black_18dp"
-            android:text="@string/phone"
+            android:drawablePadding="20dp"
+            android:text="@string/phonenumber"
             android:textSize="18sp" />
 
         <TextView
-            android:id="@+id/reseau"
+            android:id="@+id/www"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="18dp"
-            android:drawablePadding="20dp"
-            android:layout_marginTop="140dp"
+            android:layout_marginStart="@dimen/default_margin"
+            android:layout_marginTop="170dp"
             android:drawableStart="@drawable/internet"
+            android:drawablePadding="20dp"
             android:text="@string/fb"
             android:textSize="18sp" />
-    </android.support.v7.widget.CardView>
+    </androidx.cardview.widget.CardView>
 
-    <android.support.v7.widget.CardView
+    <androidx.cardview.widget.CardView
         android:id="@+id/card2"
-        android:layout_width="380dp"
-        android:layout_height="180dp"
+        android:layout_width="match_parent"
+        android:layout_height="170dp"
+        app:cardCornerRadius="5dp"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="440dp"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="502dp"
         android:visibility="visible">
 
         <TextView
@@ -132,7 +140,7 @@
             android:textSize="25sp" />
 
         <View
-            android:id="@+id/view"
+            android:id="@+id/AboutLine"
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_marginTop="45dp"
@@ -144,9 +152,11 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:layout_marginTop="60dp"
-            android:text="@string/apropostext"
+            android:text="@string/aboutme"
             android:textSize="18sp" />
 
-    </android.support.v7.widget.CardView>
+    </androidx.cardview.widget.CardView>
 
-</android.support.design.widget.CoordinatorLayout>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+
