@@ -12,6 +12,7 @@ public class DeleteNeighbourEvent {
      */
     public Neighbour neighbour;
 
+
     /**
      * Constructor.
      * @param neighbour
@@ -19,4 +20,5 @@ public class DeleteNeighbourEvent {
     public DeleteNeighbourEvent(Neighbour neighbour) {
         this.neighbour = neighbour;
     }
+
 }
