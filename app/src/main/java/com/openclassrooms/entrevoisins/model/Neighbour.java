@@ -1,17 +1,15 @@
 package com.openclassrooms.entrevoisins.model;
 
-import android.os.Parcel;
-import android.os.Parcelable;
-
+import java.io.Serializable;
 import java.util.Objects;
 
 /**
  * Model object representing a Neighbour
  */
-public class Neighbour implements Parcelable {
+public class Neighbour implements Serializable {
 
     /** Identifier */
-    private Integer id;
+    private long id;
 
     /** Full name */
     private String name;
@@ -19,41 +17,40 @@ public class Neighbour implements Parcelable {
     /** Avatar */
     private String avatarUrl;
 
+    /** Adress */
+    private String address;
+
+    /** Phone number */
+    private String phoneNumber;
+
+    /** About me */
+    private String aboutMe;
+
+    /*favorite*/
+    private Boolean favorite;
+
     /**
      * Constructor
      * @param id
      * @param name
      * @param avatarUrl
      */
-    public Neighbour(Integer id, String name, String avatarUrl) {
+    public Neighbour(long id, String name, String avatarUrl, String address,
+                     String phoneNumber, String aboutMe) {
         this.id = id;
         this.name = name;
         this.avatarUrl = avatarUrl;
+        this.address = address;
+        this.phoneNumber = phoneNumber;
+        this.aboutMe = aboutMe;
+        this.favorite = false;
     }
 
-    protected Neighbour(Parcel in) {
-        id = in.readInt();
-        name = in.readString();
-        avatarUrl = in.readString();
-    }
-
-    public static final Creator<Neighbour> CREATOR = new Creator<Neighbour>() {
-        @Override
-        public Neighbour createFromParcel(Parcel in) {
-            return new Neighbour(in);
-        }
-
-        @Override
-        public Neighbour[] newArray(int size) {
-            return new Neighbour[size];
-        }
-    };
-
-    public Integer getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -73,6 +70,30 @@ public class Neighbour implements Parcelable {
         this.avatarUrl = avatarUrl;
     }
 
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public String getAboutMe() {
+        return aboutMe;
+    }
+
+    public void setAboutMe(String aboutMe) {
+        this.aboutMe = aboutMe;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -86,15 +107,11 @@ public class Neighbour implements Parcelable {
         return Objects.hash(id);
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
+    public Boolean getFavorite () {
+        return favorite;
     }
 
-    @Override
-    public void writeToParcel(Parcel parcel, int i) {
-        parcel.writeInt(id);
-        parcel.writeString(name);
-        parcel.writeString(avatarUrl);
+    public void setFavorite (Boolean favorite) {
+        this.favorite = favorite;
     }
 }

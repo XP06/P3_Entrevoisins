@@ -8,7 +8,7 @@ import com.openclassrooms.entrevoisins.service.NeighbourApiService;
  */
 public class DI {
 
-    private static final NeighbourApiService service = new DummyNeighbourApiService();
+    private static NeighbourApiService service = new DummyNeighbourApiService();
 
     /**
      * Get an instance on @{@link NeighbourApiService}

@@ -1,18 +1,16 @@
 
 package com.openclassrooms.entrevoisins.neighbour_list;
 
-
-import androidx.test.espresso.ViewAction;
-import androidx.test.espresso.ViewAssertion;
-import androidx.test.espresso.action.ViewActions;
-import androidx.test.espresso.contrib.RecyclerViewActions;
-import androidx.test.espresso.matcher.ViewMatchers;
-import androidx.test.rule.ActivityTestRule;
-import androidx.test.runner.AndroidJUnit4;
+import android.support.test.espresso.contrib.RecyclerViewActions;
+import android.support.test.espresso.matcher.ViewMatchers;
+import android.support.test.rule.ActivityTestRule;
+import android.support.test.runner.AndroidJUnit4;
 
 import com.openclassrooms.entrevoisins.R;
-import com.openclassrooms.entrevoisins.ui.neighbour_list.ListNeighbourActivity;
-import com.openclassrooms.entrevoisins.utils.ClickItemAction;
+import com.openclassrooms.entrevoisins.di.DI;
+import com.openclassrooms.entrevoisins.model.Neighbour;
+import com.openclassrooms.entrevoisins.service.NeighbourApiService;
+import com.openclassrooms.entrevoisins.ui.neighbour.neighbour_list.ListNeighbourActivity;
 import com.openclassrooms.entrevoisins.utils.DeleteViewAction;
 
 import org.junit.Before;
@@ -20,12 +18,23 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import static androidx.test.espresso.Espresso.onView;
-import static androidx.test.espresso.assertion.ViewAssertions.matches;
-import static androidx.test.espresso.matcher.ViewMatchers.hasMinimumChildCount;
+import java.net.CookieHandler;
+import java.util.List;
+
+import static android.support.test.espresso.Espresso.onView;
+import static android.support.test.espresso.Espresso.pressBack;
+import static android.support.test.espresso.action.ViewActions.click;
+import static android.support.test.espresso.action.ViewActions.swipeLeft;
+import static android.support.test.espresso.assertion.ViewAssertions.matches;
+import static android.support.test.espresso.matcher.ViewMatchers.assertThat;
+import static android.support.test.espresso.matcher.ViewMatchers.hasMinimumChildCount;
+import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
+import static android.support.test.espresso.matcher.ViewMatchers.withId;
+import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static com.openclassrooms.entrevoisins.utils.RecyclerViewItemCountAssertion.withItemCount;
 import static org.hamcrest.core.IsNull.notNullValue;
-import static org.junit.Assert.assertThat;
+
+
 
 /**
  * Test class for list of neighbours
@@ -33,19 +42,28 @@ import static org.junit.Assert.assertThat;
 @RunWith(AndroidJUnit4.class)
 public class NeighboursListTest {
 
+
     // This is fixed
     private static int ITEMS_COUNT = 12;
+    public  int   POSITION_ITEM = 0;
 
+    private List<Neighbour> neighbourList;
     private ListNeighbourActivity mActivity;
+    private NeighbourApiService mService;
 
     @Rule
-    public ActivityTestRule<ListNeighbourActivity> mActivityRule =
-            new ActivityTestRule(ListNeighbourActivity.class);
+    public ActivityTestRule<ListNeighbourActivity> mActivityRule = new ActivityTestRule(ListNeighbourActivity.class);
+
+
 
     @Before
     public void setUp() {
         mActivity = mActivityRule.getActivity();
         assertThat(mActivity, notNullValue());
+        mService = DI.getNewInstanceApiService ();
+        neighbourList = mService.getNeighbours ();
+
+
     }
 
     /**
@@ -54,7 +72,8 @@ public class NeighboursListTest {
     @Test
     public void myNeighboursList_shouldNotBeEmpty() {
         // First scroll to the position that needs to be matched and click on it.
-        onView(ViewMatchers.withId(R.id.list_neighbours)).check(matches(hasMinimumChildCount(1)));
+        onView(withId(R.id.list_neighbours))
+                .check(matches(hasMinimumChildCount(1)));
     }
 
     /**
@@ -63,57 +82,99 @@ public class NeighboursListTest {
     @Test
     public void myNeighboursList_deleteAction_shouldRemoveItem() {
         // Given : We remove the element at position 2
-        onView(ViewMatchers.withId(R.id.list_neighbours)).check((ViewAssertion) withItemCount(ITEMS_COUNT));
+        onView(withId(R.id.list_neighbours)).check(withItemCount(ITEMS_COUNT));
         // When perform a click on a delete icon
-        onView(ViewMatchers.withId(R.id.list_neighbours))
-                .perform(RecyclerViewActions.actionOnItemAtPosition(1, (ViewAction) new DeleteViewAction()));
+        onView(withId(R.id.list_neighbours))
+                .perform(RecyclerViewActions.actionOnItemAtPosition(1, new DeleteViewAction()));
         // Then : the number of element is 11
-        onView(ViewMatchers.withId(R.id.list_neighbours)).check((ViewAssertion) withItemCount(ITEMS_COUNT-1));
+        onView(withId(R.id.list_neighbours)).check(withItemCount(ITEMS_COUNT-1));
     }
 
     /**
-     * When we click on an item, the details screen is launched
+     * Open DetailNeighbourActivity, when click on list Neighbours
      */
     @Test
-    public void myNeighboursList_onItemCLick_OpenDetailsScreen() {
-        // When perform a click on a item
-        onView(ViewMatchers.withId(R.id.list_neighbours))
-                .perform(RecyclerViewActions.actionOnItemAtPosition(0, (ViewAction) new ClickItemAction()));
-        // Then : Verify Username is displayed so it means Details Screen is displayed
-        onView(ViewMatchers.withId(R.id.userName)).check(matches(ViewMatchers.isDisplayed()));
+    public void myNeighboursList_onCliqueItem_shouldOpenDetailActivity () {
+        //Given Start Detail Activity
+        //when perform a click on item position
+        onView (withId (R.id.list_neighbours))
+                .perform (RecyclerViewActions.actionOnItemAtPosition (POSITION_ITEM, click()));
+
+        //then We check if textView neighbourNameTitle in DetailNeighbourActivity is displayed.
+        onView(withId(R.id.neigbourName)).check(matches (isDisplayed ()));
     }
 
     /**
-     * When details screen is launched, the username textview is filled
+     * Check if the name in DetailNeighbourActivity is the same of the item selected.
      */
+
     @Test
-    public void myNeighboursList_OpenDetailsScreen_UsernameIsFilled() {
-        // When perform a click on item 0
-        onView(ViewMatchers.withId(R.id.list_neighbours))
-                .perform(RecyclerViewActions.actionOnItemAtPosition(0, (ViewAction) new ClickItemAction()));
-        // Then : Verify Username equals "Caroline" so it means the username textview is filled
-        onView(ViewMatchers.withId(R.id.userName)).check(matches(ViewMatchers.withText("Caroline")));
+    public void DetailNeighbourName_onDetailNeighbourActivity_isCorrect () {
+
+        Neighbour neighbour = neighbourList.get(POSITION_ITEM);
+
+        //Given name Textview in DetailNeighbourActivity
+        //when  this Activity is opened
+        onView (withId (R.id.list_neighbours))
+                .perform (RecyclerViewActions.actionOnItemAtPosition (POSITION_ITEM, click ()));
+
+        // we check if text displayed in DetailNeighbourActivity match with neighbour name
+        onView (withId (R.id.neigbourName)).check (matches (withText(neighbour.getName ())));
+
     }
 
+
     /**
-     * Verifiy that Favs tab only contains favs users
+     * Check if favorite list contains 2 items marked as favorite.
      */
     @Test
-    public void FavsTab_OnlyContainFavsUSers() {
-        // When perform a click on a item 0
-        onView(ViewMatchers.withId(R.id.list_neighbours))
-                .perform(RecyclerViewActions.actionOnItemAtPosition(0, (ViewAction) new ClickItemAction()));
-        // Then : perform a click on favorite fab of item 0 Details Screen
-        onView(ViewMatchers.withId(R.id.fab)).perform(ViewActions.click());
-        // Then : Go Back to Main Screen
-        onView(ViewMatchers.isRoot()).perform(ViewActions.pressBack());
-        // Then : perform a swipe to Favs Tab
-        onView(ViewMatchers.isRoot()).perform(ViewActions.swipeLeft());
-        // Then : perform a click on a item 0 of favs tab to open Details Screen
-        onView(ViewMatchers.withId(R.id.list_neighbours_fav))
-                .perform(RecyclerViewActions.actionOnItemAtPosition(0, (ViewAction) new ClickItemAction()));
-        // Then : Verify Username equals "Caroline" so it means the she's added to favs
-        onView(ViewMatchers.withId(R.id.userName)).check(matches(ViewMatchers.withText("Caroline")));
+    public void favoritesList_onFavoriteFrag_showFavoriteItems_selected_on_fab_favorite () {
+        //Given Favorite list in favorite fragment.
+        //When add 2 items in favorite onClick on floating action button.
+        onView (withId (R.id.list_neighbours))
+                .perform (RecyclerViewActions.actionOnItemAtPosition (POSITION_ITEM, click ()));
+        onView (withId (R.id.fab_favorite))
+                .perform (click ());
+        pressBack ();
+
+        onView (withId (R.id.list_neighbours))
+                .perform (RecyclerViewActions.actionOnItemAtPosition (POSITION_ITEM + 1, click ()));
+        onView (withId (R.id.fab_favorite))
+                .perform (click ());
+        pressBack ();
+
+        //Swipe to fragment favorite
+        onView (withId (R.id.container))
+                .perform (swipeLeft ());
+
+        //Check if the number of items in Favorite list is same as the Neighbours was added.
+        onView (ViewMatchers.withId (R.id.list_neighboursFavorite)).check(withItemCount (2));
+
+    }
+
+    @Test
+    public void myNeighbourListFavorit_deleteAction_shouldRemoveItemFromFavorite () {
+
+        //Given we remove the item in the favorite Fragment
+
+        //add item in favorite.
+        onView (withId (R.id.list_neighbours))
+                .perform (RecyclerViewActions.actionOnItemAtPosition (POSITION_ITEM, click ()));
+        onView (withId (R.id.fab_favorite))
+                .perform (click ());
+        pressBack ();
+        //Swipe to fragment favorite
+        onView (withId (R.id.container))
+                .perform (swipeLeft ());
+        //check if the list is not empty
+        onView (withId (R.id.list_neighboursFavorite)).check (withItemCount (1));
+
+        //when performe a click on a delete icon
+        onView (ViewMatchers.withId (R.id.list_neighboursFavorite))
+                .perform (RecyclerViewActions.actionOnItemAtPosition (0, new DeleteViewAction ()));
+        //Then the number of element is 0
+        onView (ViewMatchers.withId (R.id.list_neighboursFavorite)).check (withItemCount (0));
 
     }
 }
+

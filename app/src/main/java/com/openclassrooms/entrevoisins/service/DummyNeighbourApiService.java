@@ -2,6 +2,7 @@ package com.openclassrooms.entrevoisins.service;
 
 import com.openclassrooms.entrevoisins.model.Neighbour;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -9,8 +10,8 @@ import java.util.List;
  */
 public class DummyNeighbourApiService implements  NeighbourApiService {
 
-    private final List<Neighbour> neighbours = DummyNeighbourGenerator.generateNeighbours();
-    private final List<Neighbour> favorites = DummyNeighbourGenerator.generateFavorites();
+    private List<Neighbour> neighbours = DummyNeighbourGenerator.generateNeighbours();
+
 
     /**
      * {@inheritDoc}
@@ -18,11 +19,6 @@ public class DummyNeighbourApiService implements  NeighbourApiService {
     @Override
     public List<Neighbour> getNeighbours() {
         return neighbours;
-    }
-
-
-    public List<Neighbour> getFavorites() {
-        return favorites;
     }
 
     /**
@@ -33,15 +29,44 @@ public class DummyNeighbourApiService implements  NeighbourApiService {
         neighbours.remove(neighbour);
     }
 
-    public void deleteFavorite(Neighbour favorite) {
-        favorites.remove(favorite);
+
+    @Override
+    public void addNeighbourFavorite (Neighbour neighbour) {
+        neighbours.get(neighbours.indexOf(neighbour)).setFavorite(true);
+
     }
 
-    public void addFavorite(Neighbour favorite) {
-        favorites.add(favorite);
+    @Override
+    public Boolean isFavorite (Neighbour neighbour) {
+        return neighbours.get(neighbours.indexOf(neighbour)).getFavorite();
     }
 
+    @Override
+    public List<Neighbour> getFavoriteNeighbour () {
+
+        //init list of neighboursFavorite
+        List<Neighbour> favoriteNeighbourList = new ArrayList<>();
+
+        for (Neighbour n: neighbours ){
+            if(n.getFavorite()){
+                favoriteNeighbourList.add(n);
+            }
+        }
+        return favoriteNeighbourList;
+    }
+
+    @Override
+    public void removeFavoriteNeighbour (Neighbour neighbour) {
+        neighbours.get(neighbours.indexOf(neighbour)).setFavorite(false);
+
+    }
+
+    /**
+     * {@inheritDoc}
+     * @param neighbour
+     */
+    @Override
+    public void createNeighbour(Neighbour neighbour) {
+        neighbours.add(neighbour);
+    }
 }
-
-
-

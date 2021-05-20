@@ -11,9 +11,9 @@ import org.junit.runners.JUnit4;
 
 import java.util.List;
 
-import static org.hamcrest.MatcherAssert.assertThat;
+import static junit.framework.TestCase.assertTrue;
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertThat;
 
 /**
  * Unit test on Neighbour service
@@ -42,21 +42,35 @@ public class NeighbourServiceTest {
         assertFalse(service.getNeighbours().contains(neighbourToDelete));
     }
 
+    /**
+     * Check if NeighbourFavorite is not empty after adding a neighbour too
+     */
     @Test
-    public void addFavoriteWithSuccess() {
-        Neighbour favoriteToAdd = service.getNeighbours().get(0);
-        assertFalse(service.getFavorites().contains(favoriteToAdd));
-        service.addFavorite(favoriteToAdd);
-        assertTrue(service.getFavorites().contains(favoriteToAdd));
+    public void getListFavoriteNeighbourNotEmpty () {
+
+        Neighbour neighbour = service.getNeighbours ().get (0);
+        service.addNeighbourFavorite (neighbour);
+        assertFalse (service.getFavoriteNeighbour ().isEmpty ());
+    }
+
+    /**
+     * Add a neighbour to favorite and Check if favoriteNeighbour contains neighbour added.
+     */
+    @Test
+    public void addNeighbourToFavoriteWithSuccess () {
+
+        Neighbour neighbourToAddFavorite = service.getNeighbours ().get(0);
+        service.addNeighbourFavorite (neighbourToAddFavorite);
+        assertTrue(service.getFavoriteNeighbour ().contains (neighbourToAddFavorite));
     }
 
     @Test
-    public void deleteFavoriteWithSuccess() {
-        Neighbour addFav = service.getNeighbours().get(0);
-        service.addFavorite(addFav);
-        assertTrue(service.getFavorites().contains(addFav));
-        service.deleteFavorite(addFav);
-        assertFalse(service.getFavorites().contains(addFav));
-    }
+    public void removeNeighbourToFavoriteWithSuccess () {
 
+        Neighbour neighbourToRemoveFavorite = service.getNeighbours ().get (3);
+        service.addNeighbourFavorite (neighbourToRemoveFavorite);
+        assertTrue (service.getFavoriteNeighbour ().contains (neighbourToRemoveFavorite));
+        service.deleteNeighbour (neighbourToRemoveFavorite);
+        assertFalse (service.getFavoriteNeighbour ().contains (neighbourToRemoveFavorite));
+    }
 }
