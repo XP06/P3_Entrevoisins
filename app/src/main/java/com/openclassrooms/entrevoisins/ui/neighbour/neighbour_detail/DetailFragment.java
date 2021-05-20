@@ -75,10 +75,10 @@ public class DetailFragment extends Fragment {
         fab_favorite.setOnClickListener(v -> setFabFavorite());
 
         toolbar.setNavigationOnClickListener (v -> {
-         this.getActivity ().finish ();
+            this.getActivity ().finish ();
         });
 
-         // add toolbar and back home
+        // add toolbar and back home
         ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
         ((AppCompatActivity)getActivity()).getSupportActionBar ().setDisplayHomeAsUpEnabled (true);
         ((AppCompatActivity)getActivity()).getSupportActionBar ().setTitle (mNeighbour.getName ());
